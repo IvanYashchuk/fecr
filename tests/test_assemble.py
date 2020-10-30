@@ -17,7 +17,6 @@ V = firedrake.FunctionSpace(mesh, "P", 1)
 
 def assemble_firedrake(u, kappa0, kappa1):
 
-    mesh = u.function_space().mesh()
     x = firedrake.SpatialCoordinate(mesh)
     f = x[0]
 
