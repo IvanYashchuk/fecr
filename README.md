@@ -15,7 +15,7 @@ import ufl
 from functools import partial
 
 from firedrake_numpy import evaluate_primal, evaluate_vjp
-from firedrake_numpy import firedrake_to_numpy, numpy_to_firedrake
+from firedrake_numpy import from_numpy
 
 # Create mesh for the unit square domain
 n = 10
@@ -46,7 +46,7 @@ numpy_firedrake_solve = partial(evaluate_primal, firedrake_solve, templates)
 # Let's create a vector of ones with size equal to the number of cells in the mesh
 f = np.ones(W.dim())
 u = numpy_firedrake_solve(f)[0] # u is a NumPy array now
-u_firedrake = numpy_to_firedrake(u, firedrake.Function(V)) # we need to explicitly provide template function for conversion
+u_firedrake = from_numpy(u, firedrake.Function(V)) # we need to explicitly provide template function for conversion
 
 # Now let's evaluate the vector-Jacobian product
 numpy_output, firedrake_output, firedrake_inputs, tape = numpy_firedrake_solve(f)
