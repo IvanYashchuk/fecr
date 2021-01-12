@@ -8,7 +8,6 @@ import ufl
 import fdm
 
 from firedrake_numpy import evaluate_primal, evaluate_vjp, evaluate_jvp
-from firedrake_numpy import firedrake_to_numpy, numpy_to_firedrake
 
 
 mesh = firedrake.UnitSquareMesh(3, 2)

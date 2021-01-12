@@ -2,7 +2,7 @@ import pytest
 
 import firedrake
 import numpy
-from firedrake_numpy import firedrake_to_numpy, numpy_to_firedrake
+from firedrake_numpy import to_numpy, from_numpy
 
 
 @pytest.mark.parametrize(
@@ -13,7 +13,7 @@ from firedrake_numpy import firedrake_to_numpy, numpy_to_firedrake
     ],
 )
 def test_firedrake_to_numpy_constant(test_input, expected):
-    assert numpy.allclose(firedrake_to_numpy(test_input), expected)
+    assert numpy.allclose(to_numpy(test_input), expected)
 
 
 def test_firedrake_to_numpy_function():
@@ -23,7 +23,7 @@ def test_firedrake_to_numpy_function():
     x = firedrake.SpatialCoordinate(mesh)
     test_input = firedrake.interpolate(x[0], V)
     expected = numpy.linspace(0.05, 0.95, num=10)
-    assert numpy.allclose(firedrake_to_numpy(test_input), expected)
+    assert numpy.allclose(to_numpy(test_input), expected)
 
 
 def test_firedrake_to_numpy_mixed_function():
@@ -35,7 +35,7 @@ def test_firedrake_to_numpy_mixed_function():
     test_input = firedrake.interpolate(firedrake.as_vector(vec_dim * (x[0],)), V)
     expected = numpy.linspace(0.05, 0.95, num=10)
     expected = numpy.reshape(numpy.tile(expected, (4, 1)).T, V.dim())
-    assert numpy.allclose(firedrake_to_numpy(test_input), expected)
+    assert numpy.allclose(to_numpy(test_input), expected)
 
 
 def test_firedrake_to_numpy_vector():
@@ -46,7 +46,7 @@ def test_firedrake_to_numpy_vector():
     test_input = firedrake.interpolate(x[0], V)
     test_input_vector = test_input.vector()
     expected = numpy.linspace(0.05, 0.95, num=10)
-    assert numpy.allclose(firedrake_to_numpy(test_input_vector), expected)
+    assert numpy.allclose(to_numpy(test_input_vector), expected)
 
 
 @pytest.mark.parametrize(
@@ -57,7 +57,7 @@ def test_firedrake_to_numpy_vector():
     ],
 )
 def test_numpy_to_firedrake_constant(test_input, expected):
-    firedrake_test_input = numpy_to_firedrake(test_input, firedrake.Constant(0.0))
+    firedrake_test_input = from_numpy(test_input, firedrake.Constant(0.0))
     assert numpy.allclose(firedrake_test_input.values(), expected.values())
 
 
@@ -66,7 +66,7 @@ def test_numpy_to_firedrake_function():
     mesh = firedrake.UnitIntervalMesh(10)
     V = firedrake.FunctionSpace(mesh, "DG", 0)
     template = firedrake.Function(V)
-    firedrake_test_input = numpy_to_firedrake(test_input, template)
+    firedrake_test_input = from_numpy(test_input, template)
     x = firedrake.SpatialCoordinate(mesh)
     expected = firedrake.interpolate(x[0], V)
     assert numpy.allclose(

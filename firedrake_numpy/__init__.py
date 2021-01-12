@@ -1,2 +1,2 @@
-from .helpers import firedrake_to_numpy, numpy_to_firedrake
+from .helpers import to_numpy, from_numpy
 from .core import evaluate_primal, evaluate_vjp, evaluate_jvp

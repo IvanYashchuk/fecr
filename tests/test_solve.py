@@ -9,7 +9,7 @@ import ufl
 import fdm
 
 from firedrake_numpy import evaluate_primal, evaluate_vjp, evaluate_jvp
-from firedrake_numpy import firedrake_to_numpy, numpy_to_firedrake
+from firedrake_numpy import to_numpy
 
 mesh = firedrake.UnitSquareMesh(6, 5)
 V = firedrake.FunctionSpace(mesh, "P", 1)
@@ -38,7 +38,7 @@ inputs = (np.ones(1) * 0.5, np.ones(1) * 0.6)
 def test_firedrake_forward():
     numpy_output, _, _, _ = evaluate_primal(solve_firedrake, templates, *inputs)
     u = solve_firedrake(firedrake.Constant(0.5), firedrake.Constant(0.6))
-    assert np.allclose(numpy_output, firedrake_to_numpy(u))
+    assert np.allclose(numpy_output, to_numpy(u))
 
 
 def test_firedrake_vjp():
