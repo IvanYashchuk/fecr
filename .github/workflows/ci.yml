@@ -38,7 +38,7 @@ jobs:
           python -m pip install git+https://github.com/dolfin-adjoint/pyadjoint.git@master
           python -m pip install fdm
 
-      - name: Install firedrake-ts
+      - name: Install current package
         shell: bash -l {0}
         run: |
           source /home/firedrake/firedrake/bin/activate
