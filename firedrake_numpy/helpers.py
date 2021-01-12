@@ -127,7 +127,7 @@ def check_input(
 
 def convert_all_to_firedrake(
     firedrake_templates: Iterable[FiredrakeVariable], *args: np.array
-) -> List[FiredrakeVariable]:
+) -> Iterable[FiredrakeVariable]:
     """Converts input array to corresponding Firedrake variables"""
     firedrake_inputs = []
     for inp, template in zip(args, firedrake_templates):

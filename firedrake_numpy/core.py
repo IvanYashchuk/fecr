@@ -20,10 +20,10 @@ from typing import Type, List, Union, Iterable, Callable, Tuple
 
 
 def evaluate_primal(
-    firedrake_function: Callable,
+    firedrake_function: Callable[..., FiredrakeVariable],
     firedrake_templates: Iterable[FiredrakeVariable],
     *args: np.array,
-) -> Tuple[np.array, FiredrakeVariable, Tuple[FiredrakeVariable], pyadjoint.Tape]:
+) -> Tuple[np.array, FiredrakeVariable, Iterable[FiredrakeVariable], pyadjoint.Tape]:
     """Computes the output of a firedrake_function and saves a corresponding gradient tape
     Input:
         firedrake_function (callable): Firedrake function to be executed during the forward pass
@@ -64,15 +64,15 @@ def evaluate_vjp(
     firedrake_output: FiredrakeVariable,
     firedrake_inputs: Iterable[FiredrakeVariable],
     tape: pyadjoint.Tape,
-) -> Tuple[np.array]:
+) -> Iterable[np.array]:
     """Computes the gradients of the output with respect to the inputs.
     Input:
         Δfiredrake_output (np.array): NumPy array representation of the tangent covector to multiply transposed jacobian with
         firedrake_output (AdjFloat or Function): Firedrake representation of the output from firedrake_function(*firedrake_inputs)
-        firedrake_inputs (list of FiredrakeVariable): Firedrake representation of the input args
+        firedrake_inputs (iterable of FiredrakeVariable): Firedrake representation of the input args
         tape (pyadjoint.Tape): pyadjoint's saved computational graph
     Output:
-        dnumpy_inputs (list of np.array):
+        dnumpy_inputs (iterable of np.array):
             NumPy array representation of the `Δfiredrake_output` times jacobian
             of firedrake_function(*firedrake_inputs) wrt to every firedrake_input
     """
@@ -101,7 +101,7 @@ def evaluate_jvp(
     firedrake_templates: Iterable[FiredrakeVariable],
     numpy_inputs: Iterable[np.array],
     Δnumpy_inputs: Iterable[np.array],
-) -> Tuple[np.array]:
+) -> Iterable[np.array]:
     """Computes the primal Firedrake function together with the corresponding tangent linear model.
     Note that Δnumpy_inputs are sometimes referred to as tangent vectors.
     """
