@@ -13,3 +13,4 @@ coverage:
                                #   option: "X%" a static target percentage to hit
         threshold: 100        # allowed to drop X% and still result in a "success" commit status
         if_ci_failed: error    # if ci fails report status as success, error, or failure
+    patch: off
