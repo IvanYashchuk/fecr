@@ -1,10 +1,5 @@
-import firedrake
-
-# import firedrake_adjoint
 import pyadjoint
-
 import numpy as np
-
 import functools
 
 from .helpers import (
@@ -14,7 +9,7 @@ from .helpers import (
     check_input,
     convert_all_to_backend,
 )
-from ._backends import BackendVariable
+from ._backends import BackendVariable, get_backend
 
 from typing import Type, Collection, Callable, Tuple
 
@@ -76,9 +71,12 @@ def evaluate_vjp(
             NumPy array representation of the `Δfiredrake_output` times jacobian
             of firedrake_function(*firedrake_inputs) wrt to every firedrake_input
     """
-    # Convert tangent covector (adjoint variable) to a Firedrake variable
+    # Convert tangent covector (adjoint variable) to a backend variable
     Δfiredrake_output = from_numpy(dnumpy_output, firedrake_output)
-    if isinstance(Δfiredrake_output, firedrake.Function):
+
+    # pyadjoint doesn't allow setting Functions to block_variable.adj_value
+    backend = get_backend(firedrake_inputs[0])
+    if isinstance(Δfiredrake_output, backend.Function):
         Δfiredrake_output = Δfiredrake_output.vector()
 
     tape.reset_variables()
