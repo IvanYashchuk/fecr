@@ -36,6 +36,10 @@ class AbstractBackend:
         """ helper method should recognize fem variables it can handle """
         raise NotImplementedError()
 
+    @property
+    def Function(self):
+        raise NotImplementedError()
+
     def to_numpy(self, x):
         raise NotImplementedError()
 
@@ -88,6 +92,10 @@ class FenicsBackend(AbstractBackend):
         import fenics
 
         self.fenics = fenics
+
+    @property
+    def Function(self):
+        return self.fenics.Function
 
     def is_appropriate_type(self, fem_variable):
         if isinstance(fem_variable, self.fenics.Constant):
@@ -176,6 +184,10 @@ class FiredrakeBackend(AbstractBackend):
         import firedrake
 
         self.firedrake = firedrake
+
+    @property
+    def Function(self):
+        return self.firedrake.Function
 
     def is_appropriate_type(self, fem_variable):
         if isinstance(fem_variable, self.firedrake.Constant):
