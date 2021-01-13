@@ -8,8 +8,8 @@ import ufl
 
 import fdm
 
-from fenics_numpy import evaluate_primal, evaluate_vjp, evaluate_jvp
-from fenics_numpy import to_numpy
+from firedrake_numpy import evaluate_primal, evaluate_vjp, evaluate_jvp
+from firedrake_numpy import to_numpy
 
 mesh = fa.UnitSquareMesh(6, 5)
 V = fenics.FunctionSpace(mesh, "P", 1)
