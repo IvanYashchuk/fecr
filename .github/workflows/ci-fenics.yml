@@ -60,6 +60,6 @@ jobs:
         run: |
           conda activate fenicsproject
           python -c "import sys; print('\n'.join(sys.path))"
-          python -m pytest --cov=firedrake_numpy --cov-config=tests/.coveragerc tests/fenics_backend -vvv
-          coveralls
-          bash <(curl -s https://codecov.io/bash)
+          # python -m pytest --cov=firedrake_numpy --cov-config=tests/.coveragerc tests/fenics_backend -vvv
+          # coveralls
+          # bash <(curl -s https://codecov.io/bash)
