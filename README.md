@@ -1,10 +1,25 @@
 # firedrake-numpy-adjoint &middot; [![Build](https://github.com/ivanyashchuk/firedrake-numpy-adjoint/workflows/CI/badge.svg)](https://github.com/ivanyashchuk/firedrake-numpy-adjoint/actions?query=workflow%3ACI+branch%3Amaster) [![Coverage Status](https://coveralls.io/repos/github/IvanYashchuk/firedrake-numpy-adjoint/badge.svg?branch=master)](https://coveralls.io/github/IvanYashchuk/firedrake-numpy-adjoint?branch=master)
 
-Easy interoperability with Automatic Differentiation libraries through NumPy interface to Firedrake.
+Easy interoperability with Automatic Differentiation libraries through NumPy interface to Firedrake and FEniCS.
+
+## Overview
+This package provides a high-level interface for evaluating derivatives of [FEniCS](http://fenicsproject.org) and [Firedrake](http://firedrakeproject.org/) models.
+It is intended to be used as the backend for extending Automatic Differentiation (AD) libraries to support FEniCS and Firedrake solvers.
+
+Automatic tangent linear and adjoint solvers for FEniCS/Firedrake problems are derived with [dolfin-adjoint/pyadjoint](http://www.dolfin-adjoint.org/en/latest/).
+These solvers make it possible to use forward and reverse modes Automatic Differentiation with FEniCS/Firedrake.
+
+This package is used for building bridges between FEniCS/Firedrake and JAX in [jax-fenics-adjoint](https://github.com/IvanYashchuk/jax-fenics-adjoint/).
+There is also support of PyMC3 (Theano) in [fenics-pymc3](https://github.com/IvanYashchuk/fenics-pymc3).
+Stay tuned for the Julia's ChainRule.jl, PyTorch integrations.
+
+Current limitations:
+* Composition of forward and reverse modes for higher-order derivatives is not implemented yet.
+* Differentiation wrt Dirichlet boundary conditions and mesh coordinates is not implemented yet.
 
 ## Example
 Here is the demonstration of solving the [Poisson's PDE](https://en.wikipedia.org/wiki/Poisson%27s_equation)
-on the 2D square domain and calculating the result of multiplying a vector with the solution Jacobian matrix (_du/df_) using the reverse (adjoint) mode Automatic Differentiation.
+on the 2D square domain and calculating the result of multiplying a vector with the solution Jacobian matrix (_du/df_) using the reverse mode Automatic Differentiation.
 ```python
 import numpy as np
 
