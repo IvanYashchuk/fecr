@@ -46,7 +46,7 @@ def test_firedrake_vjp():
         solve_firedrake, templates, *inputs
     )
     g = np.ones_like(numpy_output)
-    vjp_out = evaluate_pullback(g, firedrake_output, firedrake_inputs, tape)
+    vjp_out = evaluate_pullback(firedrake_output, firedrake_inputs, tape, g)
     check1 = np.isclose(vjp_out[0], np.asarray(-1.13533304))
     check2 = np.isclose(vjp_out[1], np.asarray(0.94611087))
     assert check1 and check2
@@ -68,7 +68,7 @@ def test_firedrake_jvp():
         solve_firedrake, templates, *inputs
     )
     out_tangent = evaluate_pushforward(
-        tangents, firedrake_output, firedrake_inputs, tape
+        firedrake_output, firedrake_inputs, tape, tangents
     )
 
     assert np.allclose(fdm_jvp0 + fdm_jvp1, out_tangent)

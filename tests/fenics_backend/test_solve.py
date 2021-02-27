@@ -47,7 +47,7 @@ def test_fenics_vjp():
         solve_fenics, templates, *inputs
     )
     g = np.ones_like(numpy_output)
-    vjp_out = evaluate_pullback(g, fenics_output, fenics_inputs, tape)
+    vjp_out = evaluate_pullback(fenics_output, fenics_inputs, tape, g)
     check1 = np.isclose(vjp_out[0], np.asarray(-2.91792642))
     check2 = np.isclose(vjp_out[1], np.asarray(2.43160535))
     assert check1 and check2
@@ -68,6 +68,6 @@ def test_fenics_jvp():
     _, fenics_output, fenics_inputs, tape = evaluate_primal(
         solve_fenics, templates, *inputs
     )
-    out_tangent = evaluate_pushforward(tangents, fenics_output, fenics_inputs, tape)
+    out_tangent = evaluate_pushforward(fenics_output, fenics_inputs, tape, tangents)
 
     assert np.allclose(fdm_jvp0 + fdm_jvp1, out_tangent)

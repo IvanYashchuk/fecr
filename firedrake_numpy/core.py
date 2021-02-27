@@ -55,19 +55,19 @@ def evaluate_primal(
 
 
 def evaluate_pullback(
-    Δnumpy_output: np.array,
     firedrake_output: BackendVariable,
     firedrake_inputs: Collection[BackendVariable],
     tape: pyadjoint.Tape,
+    Δnumpy_output: np.array,
 ) -> Collection[np.array]:
     """Pullback is a function to propagate the derivative information from outputs to inputs.
     It also corresponds to evaluating a Jacobian transpose vector product or vector Jacobian product.
     This is a reverse-mode automatic differentiation.
     Input:
-        Δnumpy_output (np.array): NumPy array representation of the tangent covector to multiply transposed Jacobian with
         firedrake_output (AdjFloat or Function): Firedrake representation of the output from firedrake_function(*firedrake_inputs)
         firedrake_inputs (collection of BackendVariable): Firedrake representation of the input args
         tape (pyadjoint.Tape): pyadjoint's saved computational graph
+        Δnumpy_output (np.array): NumPy array representation of the tangent covector to multiply transposed Jacobian with
     Output:
         dnumpy_inputs (collection of np.array):
             NumPy array representation of the `Δnumpy_output` times Jacobian
@@ -96,19 +96,19 @@ def evaluate_pullback(
 
 
 def evaluate_pushforward(
-    Δnumpy_inputs: Collection[np.array],
     firedrake_output: BackendVariable,
     firedrake_inputs: Collection[BackendVariable],
     tape: pyadjoint.Tape,
+    Δnumpy_inputs: Collection[np.array],
 ) -> Collection[np.array]:
     """Pushforward is a function to propagate the derivative information from inputs to outputs.
     It also corresponds to evaluating a Jacobian vector product.
     This is a forward-mode automatic differentiation.
     Input:
-        Δnumpy_inputs (collection of np.array): NumPy array representation of the tangent vector to multiply with Jacobian
         firedrake_output (AdjFloat or Function): Firedrake representation of the output from firedrake_function(*firedrake_inputs)
         firedrake_inputs (collection of BackendVariable): Firedrake representation of the input args
         tape (pyadjoint.Tape): pyadjoint's saved computational graph
+        Δnumpy_inputs (collection of np.array): NumPy array representation of the tangent vector to multiply with Jacobian
     Output:
         dnumpy_output (np.array):
             NumPy array representation of the `Δnumpy_inputs` times Jacobian

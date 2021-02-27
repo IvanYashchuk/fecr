@@ -47,7 +47,7 @@ def test_vjp_assemble_eval():
         assemble_firedrake, templates, *inputs
     )
     g = np.ones_like(numpy_output)
-    vjp_out = evaluate_pullback(g, firedrake_output, firedrake_inputs, tape)
+    vjp_out = evaluate_pullback(firedrake_output, firedrake_inputs, tape, g)
 
     fdm_jac0 = fdm.jacobian(ff0)(inputs[0])
     fdm_jac1 = fdm.jacobian(ff1)(inputs[1])
@@ -74,7 +74,7 @@ def test_jvp_assemble_eval():
         assemble_firedrake, templates, *inputs
     )
     out_tangent = evaluate_pushforward(
-        tangents, firedrake_output, firedrake_inputs, tape
+        firedrake_output, firedrake_inputs, tape, tangents
     )
 
     assert np.allclose(fdm_jvp0 + fdm_jvp1 + fdm_jvp2, out_tangent)
