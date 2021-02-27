@@ -1,6 +1,6 @@
-name: CI
+name: Firedrake
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
 
@@ -51,6 +51,6 @@ jobs:
         run: |
           source /home/firedrake/firedrake/bin/activate
           python -c "import sys; print('\n'.join(sys.path))"
-          python -m pytest --cov=firedrake_numpy --cov-config=tests/.coveragerc tests/ -vvv
+          python -m pytest --cov=firedrake_numpy --cov-config=tests/.coveragerc tests/run_tests.py --firedrake -vvv
           coveralls
           bash <(curl -s https://codecov.io/bash)
