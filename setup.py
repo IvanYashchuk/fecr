@@ -9,10 +9,10 @@ if sys.version_info < (3, 6):
 version = "0.1"
 
 setup(
-    name="firedrake_numpy",
-    description="Firedrake adjoint + NumPy",
+    name="fecr",
+    description="Finite element chain rules (fecr): Firedrake/FEniCS + pyadjoint + NumPy",
     version=version,
     author="Ivan Yashchuk",
     license="MIT",
-    packages=["firedrake_numpy"],
+    packages=["fecr"],
 )
