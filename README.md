@@ -106,7 +106,7 @@ Fork, then clone the repository:
 
 Make your change. Add tests for your change. Make the tests pass:
 
-    pytest tests/
+    pytest tests/run_tests.py --firedrake # or --fenics
 
 Check the formatting with `black` and `flake8`. Push to your fork and [submit a pull request][pr].
 
