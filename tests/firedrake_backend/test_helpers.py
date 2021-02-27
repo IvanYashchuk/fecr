@@ -2,7 +2,7 @@ import pytest
 
 import firedrake
 import numpy
-from firedrake_numpy import to_numpy, from_numpy
+from fecr import to_numpy, from_numpy
 
 
 @pytest.mark.parametrize(

@@ -1,4 +1,4 @@
-# firedrake-numpy-adjoint &middot; [![Build](https://github.com/ivanyashchuk/firedrake-numpy-adjoint/workflows/CI/badge.svg)](https://github.com/ivanyashchuk/firedrake-numpy-adjoint/actions?query=workflow%3ACI+branch%3Amaster)
+# Finite Element Chain Rules &middot; [![Build](https://github.com/ivanyashchuk/fecr/workflows/CI/badge.svg)](https://github.com/ivanyashchuk/fecr/actions?query=workflow%3ACI+branch%3Amaster)
 
 Easy interoperability with Automatic Differentiation libraries through NumPy interface to Firedrake and FEniCS.
 
@@ -11,7 +11,7 @@ These solvers make it possible to use forward and reverse modes Automatic Differ
 
 This package is used for building bridges between FEniCS/Firedrake and JAX in [jax-fenics-adjoint](https://github.com/IvanYashchuk/jax-fenics-adjoint/).
 There is also support of PyMC3 (Theano) in [fenics-pymc3](https://github.com/IvanYashchuk/fenics-pymc3).
-Stay tuned for the Julia's ChainRule.jl, PyTorch integrations.
+Stay tuned for the Julia's ChainRules.jl, PyTorch integrations.
 
 Current limitations:
 * Composition of forward and reverse modes for higher-order derivatives is not implemented yet.
@@ -37,8 +37,8 @@ import ufl
 
 from functools import partial
 
-from firedrake_numpy import evaluate_primal, evaluate_pullback
-from firedrake_numpy import from_numpy
+from fecr import evaluate_primal, evaluate_pullback
+from fecr import from_numpy
 
 # Create mesh for the unit square domain
 n = 10

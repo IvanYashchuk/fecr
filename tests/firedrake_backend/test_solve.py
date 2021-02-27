@@ -8,8 +8,8 @@ import ufl
 
 import fdm
 
-from firedrake_numpy import evaluate_primal, evaluate_pullback, evaluate_pushforward
-from firedrake_numpy import to_numpy
+from fecr import evaluate_primal, evaluate_pullback, evaluate_pushforward
+from fecr import to_numpy
 
 mesh = firedrake.UnitSquareMesh(6, 5)
 V = firedrake.FunctionSpace(mesh, "P", 1)

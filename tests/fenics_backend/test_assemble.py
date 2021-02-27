@@ -7,7 +7,7 @@ import ufl
 
 import fdm
 
-from firedrake_numpy import evaluate_primal, evaluate_pullback, evaluate_pushforward
+from fecr import evaluate_primal, evaluate_pullback, evaluate_pushforward
 
 
 mesh = fa.UnitSquareMesh(3, 2)
