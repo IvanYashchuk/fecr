@@ -8,7 +8,7 @@ import ufl
 
 import fdm
 
-from firedrake_numpy import evaluate_primal, evaluate_vjp, evaluate_jvp
+from firedrake_numpy import evaluate_primal, evaluate_pullback, evaluate_jvp
 from firedrake_numpy import to_numpy
 
 mesh = firedrake.UnitSquareMesh(6, 5)
@@ -46,7 +46,7 @@ def test_firedrake_vjp():
         solve_firedrake, templates, *inputs
     )
     g = np.ones_like(numpy_output)
-    vjp_out = evaluate_vjp(g, firedrake_output, firedrake_inputs, tape)
+    vjp_out = evaluate_pullback(g, firedrake_output, firedrake_inputs, tape)
     check1 = np.isclose(vjp_out[0], np.asarray(-1.13533304))
     check2 = np.isclose(vjp_out[1], np.asarray(0.94611087))
     assert check1 and check2

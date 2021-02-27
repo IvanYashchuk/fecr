@@ -54,25 +54,27 @@ def evaluate_primal(
 # Here dx is used for the output of a propagator since ∂x is not a valid name for python variables
 
 
-def evaluate_vjp(
-    dnumpy_output: np.array,
+def evaluate_pullback(
+    Δnumpy_output: np.array,
     firedrake_output: BackendVariable,
     firedrake_inputs: Collection[BackendVariable],
     tape: pyadjoint.Tape,
 ) -> Collection[np.array]:
-    """Computes the gradients of the output with respect to the inputs.
+    """Pullback is a function to propagate the derivative information from outputs to inputs.
+    It also corresponds to evaluating a Jacobian transpose vector product or vector Jacobian product.
+    This is a reverse-mode automatic differentiation.
     Input:
-        Δfiredrake_output (np.array): NumPy array representation of the tangent covector to multiply transposed jacobian with
+        Δnumpy_output (np.array): NumPy array representation of the tangent covector to multiply transposed Jacobian with
         firedrake_output (AdjFloat or Function): Firedrake representation of the output from firedrake_function(*firedrake_inputs)
         firedrake_inputs (collection of BackendVariable): Firedrake representation of the input args
         tape (pyadjoint.Tape): pyadjoint's saved computational graph
     Output:
         dnumpy_inputs (collection of np.array):
-            NumPy array representation of the `Δfiredrake_output` times jacobian
+            NumPy array representation of the `Δnumpy_output` times Jacobian
             of firedrake_function(*firedrake_inputs) wrt to every firedrake_input
     """
     # Convert tangent covector (adjoint variable) to a backend variable
-    Δfiredrake_output = from_numpy(dnumpy_output, firedrake_output)
+    Δfiredrake_output = from_numpy(Δnumpy_output, firedrake_output)
 
     # pyadjoint doesn't allow setting Functions to block_variable.adj_value
     backend = get_backend(firedrake_inputs[0])
