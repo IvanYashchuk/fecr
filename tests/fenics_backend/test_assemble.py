@@ -7,7 +7,7 @@ import ufl
 
 import fdm
 
-from firedrake_numpy import evaluate_primal, evaluate_vjp, evaluate_jvp
+from firedrake_numpy import evaluate_primal, evaluate_pullback, evaluate_jvp
 
 
 mesh = fa.UnitSquareMesh(3, 2)
@@ -46,7 +46,7 @@ def test_vjp_assemble_eval():
         assemble_fenics, templates, *inputs
     )
     g = np.ones_like(numpy_output)
-    vjp_out = evaluate_vjp(g, fenics_output, fenics_inputs, tape)
+    vjp_out = evaluate_pullback(g, fenics_output, fenics_inputs, tape)
 
     fdm_jac0 = fdm.jacobian(ff0)(inputs[0])
     fdm_jac1 = fdm.jacobian(ff1)(inputs[1])

@@ -29,7 +29,7 @@ import ufl
 
 from functools import partial
 
-from firedrake_numpy import evaluate_primal, evaluate_vjp
+from firedrake_numpy import evaluate_primal, evaluate_pullback
 from firedrake_numpy import from_numpy
 
 # Create mesh for the unit square domain
@@ -68,7 +68,7 @@ numpy_output, firedrake_output, firedrake_inputs, tape = numpy_firedrake_solve(f
 g = np.ones_like(numpy_output)
 
 # `vjp_out` is the result of (implicitly) multiplying the vector `g` with the solution Jacobian du/df
-vjp_out = evaluate_vjp(g, firedrake_output, firedrake_inputs, tape)
+vjp_out = evaluate_pullback(g, firedrake_output, firedrake_inputs, tape)
 ```
 
 Check the `tests/` folder for the additional usage examples.

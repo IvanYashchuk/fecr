@@ -8,7 +8,7 @@ import ufl
 
 import fdm
 
-from firedrake_numpy import evaluate_primal, evaluate_vjp, evaluate_jvp
+from firedrake_numpy import evaluate_primal, evaluate_pullback, evaluate_jvp
 from firedrake_numpy import to_numpy
 
 mesh = fa.UnitSquareMesh(6, 5)
@@ -47,7 +47,7 @@ def test_fenics_vjp():
         solve_fenics, templates, *inputs
     )
     g = np.ones_like(numpy_output)
-    vjp_out = evaluate_vjp(g, fenics_output, fenics_inputs, tape)
+    vjp_out = evaluate_pullback(g, fenics_output, fenics_inputs, tape)
     check1 = np.isclose(vjp_out[0], np.asarray(-2.91792642))
     check2 = np.isclose(vjp_out[1], np.asarray(2.43160535))
     assert check1 and check2
