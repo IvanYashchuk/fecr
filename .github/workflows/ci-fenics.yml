@@ -1,6 +1,6 @@
-name: CI-fenics
+name: FEniCS
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
 
@@ -60,6 +60,6 @@ jobs:
         run: |
           conda activate fenicsproject
           python -c "import sys; print('\n'.join(sys.path))"
-          python -m pytest --cov=firedrake_numpy --cov-config=tests/.coveragerc tests/fenics_backend -vvv
+          python -m pytest --cov=firedrake_numpy --cov-config=tests/.coveragerc tests/run_tests.py --fenics -vvv
           coveralls
           bash <(curl -s https://codecov.io/bash)
