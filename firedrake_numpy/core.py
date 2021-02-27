@@ -19,7 +19,7 @@ def evaluate_primal(
     firedrake_templates: Collection[BackendVariable],
     *args: np.array,
 ) -> Tuple[np.array, BackendVariable, Collection[BackendVariable], pyadjoint.Tape]:
-    """Computes the output of a firedrake_function and saves a corresponding gradient tape
+    """Computes the output of a firedrake_function and saves a corresponding pyadjoint tape
     Input:
         firedrake_function (callable): Firedrake function to be executed during the forward pass
         firedrake_templates (collection of BackendVariable): Templates for converting arrays to Firedrake types

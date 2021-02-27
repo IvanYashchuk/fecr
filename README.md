@@ -17,6 +17,14 @@ Current limitations:
 * Composition of forward and reverse modes for higher-order derivatives is not implemented yet.
 * Differentiation wrt Dirichlet boundary conditions and mesh coordinates is not implemented yet.
 
+## API
+The package includes 5 functions:
+
+ - two functions for converting between NumPy and FEniCS/Firedrake: `to_numpy`, `from_numpy`,
+ - `evaluate_primal` - computes the output of a FEniCS/Firedrake function and saves a corresponding computational graph,
+ - `evaluate_pullback` - propagates the derivative information from outputs to inputs (reverse-mode AD),
+ - `evaluate_pushforward` - propagates the derivative information from inputs to outputs (forward-mode AD).
+
 ## Example
 Here is the demonstration of solving the [Poisson's PDE](https://en.wikipedia.org/wiki/Poisson%27s_equation)
 on the 2D square domain and calculating the result of multiplying a vector with the solution Jacobian matrix (_du/df_) using the reverse mode Automatic Differentiation.
