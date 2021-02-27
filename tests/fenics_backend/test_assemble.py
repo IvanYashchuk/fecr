@@ -7,7 +7,7 @@ import ufl
 
 import fdm
 
-from firedrake_numpy import evaluate_primal, evaluate_pullback, evaluate_jvp
+from firedrake_numpy import evaluate_primal, evaluate_pullback, evaluate_pushforward
 
 
 mesh = fa.UnitSquareMesh(3, 2)
@@ -69,6 +69,9 @@ def test_jvp_assemble_eval():
     fdm_jvp1 = fdm.jvp(ff1, tangents[1])(primals[1])
     fdm_jvp2 = fdm.jvp(ff2, tangents[2])(primals[2])
 
-    _, out_tangent = evaluate_jvp(assemble_fenics, templates, primals, tangents)
+    _, fenics_output, fenics_inputs, tape = evaluate_primal(
+        assemble_fenics, templates, *inputs
+    )
+    out_tangent = evaluate_pushforward(tangents, fenics_output, fenics_inputs, tape)
 
     assert np.allclose(fdm_jvp0 + fdm_jvp1 + fdm_jvp2, out_tangent)

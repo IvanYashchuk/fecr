@@ -95,19 +95,25 @@ def evaluate_pullback(
     return dnumpy_inputs
 
 
-def evaluate_jvp(
-    firedrake_function: Callable,
-    firedrake_templates: Collection[BackendVariable],
-    numpy_inputs: Collection[np.array],
+def evaluate_pushforward(
     Δnumpy_inputs: Collection[np.array],
+    firedrake_output: BackendVariable,
+    firedrake_inputs: Collection[BackendVariable],
+    tape: pyadjoint.Tape,
 ) -> Collection[np.array]:
-    """Computes the primal Firedrake function together with the corresponding tangent linear model.
-    Note that Δnumpy_inputs are sometimes referred to as tangent vectors.
+    """Pushforward is a function to propagate the derivative information from inputs to outputs.
+    It also corresponds to evaluating a Jacobian vector product.
+    This is a forward-mode automatic differentiation.
+    Input:
+        Δnumpy_inputs (collection of np.array): NumPy array representation of the tangent vector to multiply with Jacobian
+        firedrake_output (AdjFloat or Function): Firedrake representation of the output from firedrake_function(*firedrake_inputs)
+        firedrake_inputs (collection of BackendVariable): Firedrake representation of the input args
+        tape (pyadjoint.Tape): pyadjoint's saved computational graph
+    Output:
+        dnumpy_output (np.array):
+            NumPy array representation of the `Δnumpy_inputs` times Jacobian
+            of firedrake_function(*firedrake_inputs) wrt to every firedrake_input
     """
-
-    numpy_output, firedrake_output, firedrake_inputs, tape = evaluate_primal(
-        firedrake_function, firedrake_templates, *numpy_inputs
-    )
 
     # Now tangent (pushforward) evaluation!
     tape.reset_variables()
@@ -121,4 +127,4 @@ def evaluate_jvp(
     dfiredrake_output = firedrake_output.block_variable.tlm_value
     dnumpy_output = to_numpy(dfiredrake_output)
 
-    return numpy_output, dnumpy_output
+    return dnumpy_output
