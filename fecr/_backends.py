@@ -40,6 +40,10 @@ class AbstractBackend:
     def Function(self):
         raise NotImplementedError()
 
+    @property
+    def lib(self):
+        raise NotImplementedError()
+
     def to_numpy(self, x):
         raise NotImplementedError()
 
@@ -96,6 +100,10 @@ class FenicsBackend(AbstractBackend):
     @property
     def Function(self):
         return self.fenics.Function
+
+    @property
+    def lib(self):
+        return self.fenics
 
     def is_appropriate_type(self, fem_variable):
         if isinstance(fem_variable, self.fenics.Constant):
@@ -188,6 +196,10 @@ class FiredrakeBackend(AbstractBackend):
     @property
     def Function(self):
         return self.firedrake.Function
+
+    @property
+    def lib(self):
+        return self.firedrake
 
     def is_appropriate_type(self, fem_variable):
         if isinstance(fem_variable, self.firedrake.Constant):
