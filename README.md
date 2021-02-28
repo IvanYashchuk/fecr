@@ -1,4 +1,4 @@
-# Finite Element Chain Rules &middot; [![Build](https://github.com/ivanyashchuk/fecr/workflows/CI/badge.svg)](https://github.com/ivanyashchuk/fecr/actions?query=workflow%3ACI+branch%3Amaster)
+# Finite Element Chain Rules &middot; [![Build](https://github.com/ivanyashchuk/fecr/workflows/CI/badge.svg)](https://github.com/ivanyashchuk/fecr/actions?query=workflow%3ACI+branch%3Amaster) [![codecov](https://codecov.io/gh/IvanYashchuk/fecr/branch/master/graph/badge.svg?token=5TCRI7OT6E)](https://codecov.io/gh/IvanYashchuk/fecr)
 
 Easy interoperability with Automatic Differentiation libraries through NumPy interface to Firedrake and FEniCS.
 
