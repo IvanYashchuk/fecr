@@ -9,9 +9,10 @@ It is intended to be used as the backend for extending Automatic Differentiation
 Automatic tangent linear and adjoint solvers for FEniCS/Firedrake problems are derived with [dolfin-adjoint/pyadjoint](http://www.dolfin-adjoint.org/en/latest/).
 These solvers make it possible to use forward and reverse modes Automatic Differentiation with FEniCS/Firedrake.
 
-This package is used for building bridges between FEniCS/Firedrake and JAX in [jax-fenics-adjoint](https://github.com/IvanYashchuk/jax-fenics-adjoint/).
-There is also support of PyMC3 (Theano) in [fenics-pymc3](https://github.com/IvanYashchuk/fenics-pymc3).
-Stay tuned for the Julia's ChainRules.jl, PyTorch integrations.
+This package is used for building bridges between FEniCS/Firedrake and:
+* JAX in [jax-fenics-adjoint](https://github.com/IvanYashchuk/jax-fenics-adjoint/),
+* PyMC3 (Theano) in [fenics-pymc3](https://github.com/IvanYashchuk/fenics-pymc3),
+* Julia's ChainRules.jl in [PyFenicsAD.jl](https://github.com/IvanYashchuk/PyFenicsAD.jl).
 
 Current limitations:
 * Composition of forward and reverse modes for higher-order derivatives is not implemented yet.
