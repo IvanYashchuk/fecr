@@ -16,7 +16,7 @@ This package is used for building bridges between FEniCS/Firedrake and:
 
 Current limitations:
 * Composition of forward and reverse modes for higher-order derivatives is not implemented yet.
-* Differentiation wrt Dirichlet boundary conditions and mesh coordinates is not implemented yet.
+* Differentiation with respect to mesh coordinates is not implemented yet.
 
 ## API
 The package includes 5 functions:
