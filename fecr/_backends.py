@@ -28,12 +28,12 @@ class BackendVariable:
 
 
 class AbstractBackend:
-    """Base backend class, major part of methods are only for debugging purposes. """
+    """Base backend class, major part of methods are only for debugging purposes."""
 
     framework_name: str
 
     def is_appropriate_type(self, tensor):
-        """ helper method should recognize fem variables it can handle """
+        """helper method should recognize fem variables it can handle"""
         raise NotImplementedError()
 
     @property
@@ -244,9 +244,7 @@ class FiredrakeBackend(AbstractBackend):
                 return type(firedrake_var_template)(numpy_array)
 
         if isinstance(firedrake_var_template, self.firedrake.Function):
-            function_space = firedrake_var_template.function_space()
-
-            u = type(firedrake_var_template)(function_space)
+            u = firedrake_var_template.copy(deepcopy=True)
 
             # assume that given numpy array is global array that needs to be distrubuted across processes
             # when Firedrake function is created
@@ -260,9 +258,9 @@ class FiredrakeBackend(AbstractBackend):
                 )
                 raise ValueError(err_msg)
 
-            if numpy_array.dtype != np.float_:
+            if numpy_array.dtype != u.dat.dtype:
                 err_msg = (
-                    f"The numpy array must be of type {np.float_}, "
+                    f"The numpy array must be of type {u.dat.dtype}, "
                     "but got {numpy_array.dtype}"
                 )
                 raise ValueError(err_msg)
@@ -270,9 +268,8 @@ class FiredrakeBackend(AbstractBackend):
             range_begin, range_end = u.vector().local_range()
             numpy_array = np.asarray(numpy_array)
             local_array = numpy_array.reshape(firedrake_size)[range_begin:range_end]
-            # TODO: replace with a Firedrake-way of setting local portion of data (probably u.dat.data)
-            u.vector().set_local(local_array)
-            u.vector().apply("insert")
+            with u.dat.vec_wo as v:
+                v.array[:] = local_array
             return u
 
         err_msg = f"Cannot convert numpy array to {firedrake_var_template}"
