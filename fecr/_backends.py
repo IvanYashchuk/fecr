@@ -244,7 +244,11 @@ class FiredrakeBackend(AbstractBackend):
                 return type(firedrake_var_template)(numpy_array)
 
         if isinstance(firedrake_var_template, self.firedrake.Function):
-            u = firedrake_var_template.copy(deepcopy=True)
+            function_space = firedrake_var_template.function_space()
+
+            u = type(firedrake_var_template)(
+                function_space, dtype=firedrake_var_template.dat.dtype
+            )
 
             # assume that given numpy array is global array that needs to be distrubuted across processes
             # when Firedrake function is created
