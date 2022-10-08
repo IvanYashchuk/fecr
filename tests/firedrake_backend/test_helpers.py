@@ -61,11 +61,23 @@ def test_numpy_to_firedrake_constant(test_input, expected):
     assert numpy.allclose(firedrake_test_input.values(), expected.values())
 
 
-def test_numpy_to_firedrake_function():
-    test_input = numpy.linspace(0.05, 0.95, num=10)
+@pytest.mark.parametrize(
+    "dtype",
+    [
+        numpy.float64,
+        # Default build of PETSc supports only float64 dtype
+        # AssertionError: Can't create Vec with type float32, must be <class 'numpy.float64'>
+        # PyOP2/pyop2/types/dat.py:683: AssertionError
+        pytest.param(numpy.float32, marks=pytest.mark.xfail),
+        pytest.param(numpy.complex64, marks=pytest.mark.xfail),
+        pytest.param(numpy.complex128, marks=pytest.mark.xfail),
+    ],
+)
+def test_numpy_to_firedrake_function(dtype):
+    test_input = numpy.linspace(0.05, 0.95, num=10, dtype=dtype)
     mesh = firedrake.UnitIntervalMesh(10)
     V = firedrake.FunctionSpace(mesh, "DG", 0)
-    template = firedrake.Function(V)
+    template = firedrake.Function(V, dtype=dtype)
     firedrake_test_input = from_numpy(test_input, template)
     x = firedrake.SpatialCoordinate(mesh)
     expected = firedrake.interpolate(x[0], V)
