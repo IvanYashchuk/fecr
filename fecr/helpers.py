@@ -53,14 +53,6 @@ def check_input(
                 " {} but got {}.".format(template.shape, i, arg.shape)
             )
 
-    # Check that the inputs are of double precision
-    for i, arg in enumerate(args):
-        if arg.dtype != np.float64:
-            raise TypeError(
-                "All inputs must be type {},"
-                " but got {} for input {}.".format(np.float64, arg.dtype, i)
-            )
-
 
 def convert_all_to_backend(
     backend_templates: Collection[BackendVariable], *args: np.array
