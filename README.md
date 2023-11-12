@@ -84,26 +84,30 @@ Check the `tests/` folder for the additional usage examples.
 
 ## Installation
 First install [FEniCS](https://fenicsproject.org/download/) or [Firedrake](https://firedrakeproject.org/download.html).
-Then install [dolfin-adjoint](http://www.dolfin-adjoint.org/en/latest/) with:
+Then install [dolfin-adjoint](http://www.dolfin-adjoint.org/en/latest/) for FEniCS with:
+
+    python -m pip install git+https://github.com/dolfin-adjoint/pyadjoint.git@2023.0.0
+
+or for Firedrake with:
 
     python -m pip install git+https://github.com/dolfin-adjoint/pyadjoint.git@master
 
-Then install [firedrake-numpy-adjoint](https://github.com/IvanYashchuk/firedrake-numpy-adjoint) with:
+Then install [fecr](https://github.com/IvanYashchuk/fecr) with:
 
-    python -m pip install git+https://github.com/IvanYashchuk/firedrake-numpy-adjoint@master
+    python -m pip install git+https://github.com/IvanYashchuk/fecr@master
 
 
 ## Reporting bugs
 
 If you found a bug, create an [issue].
 
-[issue]: https://github.com/IvanYashchuk/firedrake-numpy-adjoint/issues/new
+[issue]: https://github.com/IvanYashchuk/fecr/issues/new
 
 ## Asking questions and general discussion
 
 If you have a question or anything else, create a new [discussion]. Using issues is also fine!
 
-[discussion]: https://github.com/IvanYashchuk/firedrake-numpy-adjoint/discussions/new
+[discussion]: https://github.com/IvanYashchuk/fecr/discussions/new
 
 ## Contributing
 
@@ -111,7 +115,7 @@ Pull requests are welcome from everyone.
 
 Fork, then clone the repository:
 
-    git clone https://github.com/IvanYashchuk/firedrake-numpy-adjoint.git
+    git clone https://github.com/IvanYashchuk/fecr.git
 
 Make your change. Add tests for your change. Make the tests pass:
 
@@ -119,4 +123,4 @@ Make your change. Add tests for your change. Make the tests pass:
 
 Check the formatting with `black` and `flake8`. Push to your fork and [submit a pull request][pr].
 
-[pr]: https://github.com/IvanYashchuk/firedrake-numpy-adjoint/pulls
+[pr]: https://github.com/IvanYashchuk/fecr/pulls
